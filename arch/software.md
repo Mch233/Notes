@@ -60,7 +60,7 @@ pacman -S fcitx-sogoupinyin
 	pacman -S vim
 	pacman -S atom
 
-	pacman -S deadbeef
+	pacman -S audacious 
 
 	pacman -S dragon
 
