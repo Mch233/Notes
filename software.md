@@ -58,12 +58,11 @@ pacman -S fcitx-sogoupinyin
 	pacman -S libreoffice-still-zh-cn
 
 	pacman -S vim
-	pacman -S emacs
 	pacman -S atom
 
-	pacman -S netease-cloud-music
+	pacman -S deadbeef
 
-	pacman -S vlc
+	pacman -S dragon
 
 	pacman -S uget
 
