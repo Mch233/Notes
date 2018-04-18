@@ -1,0 +1,156 @@
+Reducing the Dimensionality of Data with Neural Networks
+用神经网络缩减数据的维度
+
+　　High-dimensional data can be converted to low-dimensional codes by training a multilaver neural network with a small central layer to reconstruct high-dimensional inputvectors.	
+高位数据可转换为低维数据，通过训练一个多层神经网络和一个小的中央网络重建高维输入向量	
+Ｇradient descent can be used for fine-tuning the weights in such ''autoencoder'' network, but this work well only if the initial weights are close to a good solution. 
+在自动编码器网络梯度下降法可以微调权重，但是只有当这些初始权重接近最优解时才有好的效果。	
+We describe an effective way of initializing the　weights that allows deep autoencoder networks to learn low-dimensional codes that work much　better than principal components analysis as a tool to reduce the dimensionality of data.	
+我们发明一个有效的方法来初始权重，使深度自动编码器网络学习低维特征而且他比ＰＣＡ(主成分分析)数据降维性能好
+Dimensionality reduction facilitates the　classification, visualization, communication,and storage of high-dimensional　data.
+降维促进分类，视觉化，通信和大数据存储	
+A simple and widely used method is　principal components analysis (PCA), which　finds the directions of greatest variance in the　data set and represents each data point by its　coordinates along each of these directions.	
+一个简单、广泛的用处时PCA,表明在数据设置中巨大差额趋势，用他的坐标系代表每个数据点和方向 
+We　describe a nonlinear generalization of PCA that　uses an adaptive, multilayer ‘’encoder‘’ network　to transform the high-dimensional data into a　low-dimensional code and a similar ‘’decoder‘’　network to recover the data from the code.
+我们描述一个广义的非线性PCA，用一个适应的多层编码器网络转换高维数据为一个低维特征和一个小译码器网络以从特征恢复数据。
+Starting with random weights in the two　networks, they can be trained together by　minimizing the discrepancy between the original　data and its reconstruction. 
+以两个随机权重网络开始，同时训练两个网络,使得原始数据和重组数据之间的差异最小化
+The required　gradients are easily obtained by using the chain　rule to backpropagate error derivatives first　through the decoder network and then through　the encoder network (1).
+所需坡度很容易得到，通过链式法则进行误差反向传播导数，首先训练编码器网络然后译码器网络
+The whole system is　called an ‘’autoencoder‘’ and is depicted in　Fig. 1.
+整个系统称为自动编码器。
+
+　　It is difficult to optimize the weights in　nonlinear autoencoders that have multiple　hidden layers (2–4).
+在非线性自动编码器上最优化权重很困难，因为它含有２－４层隐含层。 
+With large initial weights,autoencoders typically find poor local minima;with small initial weights, the gradients in theearly layers are tiny, making it infeasible to　train autoencoders with many hidden layers.
+伴随大量初始权重，自动编码器通常找到局部最小值；当含有少量初始权重，前层坡度很小，使得在多隐含层下训练自动编码器是办不到的。
+If　the initial weights are close to a good solution,gradient descent works well, but finding such　initial weights requires a very different type of　algorithm that learns one layer of features at a　time.
+如果初始权重接近解，梯度下降法效果拔群，但是找到这样的初始权重需要一个不同寻常的算法模型，一次学习到一层的特征
+We introduce this “pretraining” procedure　for binary data, generalize it to real-valued data,　and show that it works well for a variety of　data sets.
+对于二进制数据我们采用训练前的步骤，归纳为实数数据，并且对于变化的数据组it works well
+
+An ensemble of binary vectors (e.g., images) can be modeled using a two-layer network called a Brestricted Boltzmann machine[(RBM) (5, 6) in which stochastic, binary pixels are connected to stochastic, binary feature detectors using symmetrically weighted connections.
+可以使用被称为Brestricted Boltzmann机器[（RBM）（5,6））的双层网络（例如图像）的集合，其中随机二进制像素连接到随机二进制特征检测器，使用对称加权连接。
+The pixels correspond to “visible” units of the RBM because their states are observed; the feature detectors correspond to “hidden” units. A joint configuration (v, h) of the visible and hidden units has an energy (7) given by
+像素点相当于受限玻尔兹曼机的““视觉”单元，因为他们规定为可见的。特征探测器相当于隐藏单元。视觉单元和隐含层单元的节点结构拥有一个能量函数如下
+where vi and hj are the binary states of pixel i　and feature j, bi and bj are their biases, and wij　is the weight between them. The network assigns　a probability to every possible image via　this energy function, as explained in (8). 
+vi 和　hj　是像素 i 和特征　ｊ　的二进制状态，bi 和　bj 是他们的偏量，wij 是他们之间的权重。这个网络分配一个概率给每一个可能的图像路径能量函数正如（８）解释的那样
+The　probability of a training image can be raised by　adjusting the weights and biases to lower the　energy of that image and to raise the energy of　similar, ”confabulated“ images that the networkwould prefer to the real data.
+训练图像的概率可以通过调整权重和偏差来提高，以降低图像的能量，并提高网络更喜欢真实数据的类似“虚构”图像的能量。
+Given a training　image, the binary state hj of each feature detector　j is set to 1 with probability　
+对于一个训练图，每个特征探测器的二进制状态hj，j设置为１和概率
+where s(x) 　is the logistic function　bj is the bias of j, vi is the　state of pixel i, and wij is the weight between i　and j.
+s(x) 是逻辑斯特方程，bj是ｊ的偏量，ｖｉ是像素ｉ的状态，ｗｉｊ是ｉ和ｊ之间的权重
+Once binary states have been chosen for　the hidden units, a ”confabulation“ is produced　by setting each vi to 1 with probability　where bi is the bias of i.
+一旦选择了隐含层单元的二进制状态，通过将每个vi设定为1的概率来产生“"虚构”，其中bi是i的偏倚。
+The states of　the hidden units are then updated once more so　that they represent features of the confabulation.　The change in a weight is given by
+之后隐含层单元的状态更新一次，所以他能代表虚构的特征，权重的变化如下
+where e is a learning rate, <vihj>data is the　fraction of times that the pixel i and feature　detector j are on together when the feature　detectors are being driven by data, and　<vi　hj>recon is the corresponding fraction for　confabulations. 
+其中e是学习速率，<vihj>数据是当特征检测器被数据驱动时像素i和特征检测器j在一起的时间的分数，并且<vi hj> recon是用于协作的相应分数。
+A simplified version of the　same learning rule is used for the biases.
+相同学习规则的简化版本用于偏差。
+The　learning works well even though it is not　exactly following the gradient of the log　probability of the training data (6).
+尽管它并不完全遵循训练数据的对数概率梯度（6），但学习效果良好。
+
+A single layer of binary features is not the　best way to model the structure in a set of images.
+单层二元特征并不是模型化一组图像中结构的最佳方式。
+After learning one layer of feature detectors,we can treat their activities—when they　are being driven by the data—as data for
+learning a second layer of features. 
+在学习了一层特征探测器之后，我们可以将它们的活动（当它们由数据驱动时）作为数据来处理学习第二层功能。
+The first　layer of feature detectors then become the　visible units for learning the next RBM.
+第一层特征检测器就成为学习下一个RBM的可见单元。
+This　layer-by-layer learning can be repeated as many　times as desired. 
+这种逐层学习可以根据需要重复多次。
+It can be shown that adding an　extra layer always improves a lower bound on　the log probability that the model assigns to the　training data, provided the number of feature　detectors per layer does not decrease and their　weights are initialized correctly (9). 
+可以证明，如果每层特征检测器的数量不减少并且它们的权重被正确初始化（9），那么增加一个额外的层总是可以改善模型分配给训练数据的对数概率的下界。
+This bound　does not apply when the higher layers have　fewer feature detectors, but the layer-by-layer　learning algorithm is nonetheless a very effective　way to pretrain the weights of a deep autoencoder.
+当较高层具有较少的特征检测器时，这种界限不适用，但逐层学习算法仍然是预先编制深度自动编码器权重的非常有效的方法。
+Each layer of features captures strong,　high-order correlations between the activities of　units in the layer below. 
+每个特征层捕获下图层单元的活动之间强烈的高阶相关性。
+For a wide variety of　data sets, this is an efficient way to progressively　reveal low-dimensional, nonlinear　structure
+对于各种数据集，这是逐步揭示低维非线性结构的有效方法
+
+After pretraining multiple layers of feature　detectors, the model is Bunfolded[ (Fig. 1) to　produce encoder and decoder networks that　initially use the same weights. The global finetuning　stage then replaces stochastic activities　by deterministic, real-valued probabilities and　uses backpropagation through the whole autoencoder　to fine-tune the weights for optimal　reconstruction
+在预训练多层特征探测器之后，该模型是“"unfolded" （图1）以产生最初使用相同权重的编码器和解码器网络。 全局微调阶段然后用确定性的实值概率代替随机活动，并通过整个自动编码器使用反向传播来微调权重以实现最佳重构	
+
+For continuous data, the hidden units of the first-level RBM remain binary, but the visible units are replaced by linear units with Gaussian noise (10). 
+对于连续数据，第一级RBM的隐藏单元保持二进制，但可见单元被具有高斯噪声的线性单元替代（10）。
+If this noise has unit variance, the stochastic update rule for the hidden units remains the same and the update rule for visible unit i is to sample from a Gaussian with unit variance and mean 
+如果这个噪声具有单位方差，那么隐藏单位的随机更新规则保持不变，并且可见单位i的更新规则是从具有单位方差和均值的高斯
+
+In all our experiments, the visible units of every RBM had real-valued activities, which were in the range E0, 1^ for logistic units.
+在我们所有的实验中，每个RBM的可见单位都有实值活动，对于逻辑单位，这些实值活动在[0,1]范围内。
+While training higher level RBMs, the visible units were set to the activation probabilities of the hidden units in the previous RBM, but the hidden units of every RBM except the top one had stochastic binary values. 
+在训练更高层次的RBM时，可见单元被设置为先前RBM中隐藏单元的激活概率，但除了最高RBM之外的每个RBM的隐藏单元具有随机二进制值。
+The hidden units of the top RBM had stochastic real-valued states drawn from a unit variance Gaussian whose mean was determined by the input from that RBM_s logistic visible units. 
+顶部RBM的隐藏单位具有随机实值状态，从单位方差高斯绘制，其平均值由来自RBM_s对数可见单位的输入确定。
+This allowed the low-dimensional codes to make good use of continuous variables and facilitated comparisons with PCA. Details of the pretraining and fine-tuning can be found in (8).
+这使得低维代码能够很好地利用连续变量并且便于与PCA进行比较。 （8）中可以找到预训练和微调的细节。
+
+To demonstrate that our pretraining algorithm allows us to fine-tune deep networks efficiently, we trained a very deep autoencoder
+on a synthetic data set containing images of "curves" that were generated from three randomly chosen points in two dimensions (8). 
+为了证明我们的预训练算法允许我们有效地微调深度网络，我们在一个合成数据集上训练了一个非常深的自动编码器，该数据集包含从三个随机选择的点在两维（8）中生成的“曲线”图像。
+For this data set, the true intrinsic dimensionality is known, and the relationship between the pixel intensities and the six numbers used to generate them is highly nonlinear. 
+对于这个数据集，真实的固有维度是已知的，并且像素强度和用于生成它们的六个数字之间的关系是高度非线性的。
+The pixel intensities lie between 0 and 1 and are very non-Gaussian, so we used logistic output units in the autoencoder, and the fine-tuning stage of the learning minimized the cross-entropy error	
+像素强度介于0和1之间，并且非高斯，因此我们在自编码器中使用逻辑输出单位，并且学习的微调阶段使交叉熵误差最小化
+where pi is the intensity of pixel i and gpˆi is the intensity of its reconstruction
+其中pi是像素i的强度，gpi是其重建的强度
+
+The autoencoder consisted of an encoder with layers of size (28 * 28)-400-200-100-50-25-6 and a symmetric decoder. 
+自动编码器由一个尺寸为（28 * 28）-400-200-100-50-25-6的层级编码器和一个对称解码器组成。
+The six units in the code layer were linear and all the other units were logistic. The network was trained on 20,000 images and tested on 10,000 new images. 
+代码层中的六个单元是线性的，所有其他单元都是逻辑单元。 该网络在20,000张图像上进行了培训，并对10,000张新图像进行了测试。
+The autoencoder discovered how to convert each 784-pixel image into six real numbers that allow almost perfect reconstruction (Fig. 2A). PCA gave much worse reconstructions.
+自动编码器发现了如何将每个784像素图像转换为六个实数，以实现几乎完美的重建（图2A）。 PCA给予了更糟糕的重建。
+Without pretraining, the very deep autoencoder always reconstructs the average of the training data, even after prolonged fine-tuning
+(8). 
+在不进行预训练的情况下，即使在长时间的微调之后，非常深的自编码器也会重构训练数据的平均值（8）。
+Shallower autoencoders with a single hidden layer between the data and the code can learn without pretraining, but pretraining
+greatly reduces their total training time (8).
+具有数据和代码之间的单个隐藏层的较浅的自编码器可以在不进行预训练的情况下学习，但预训练可以大大减少总训练时间（8）。
+When the number of parameters is the same, deep autoencoders can produce lower reconstruction errors on test data than shallow ones,but this advantage disappears as the number of parameters increases (8).
+当参数数量相同时，深度自动编码器可以在测试数据上产生较浅的重建误差，但随着参数数量的增加，这种优势消失（8）。
+
+Next, we used a 784-1000-500-250-30 autoencoder to extract codes for all the handwritten digits in the MNIST training set (11).
+接下来，我们使用784-1000-500-250-30自动编码器为MNIST训练集（11）中的所有手写数字提取代码。
+The Matlab code that we used for the pretraining and fine-tuning is available in (8). 
+（8）中提供了我们用于预训练和微调的Matlab代码。
+Again, all units were logistic except for the 30 linear units in the code layer. 
+同样，除了代码层中的30个线性单元外，所有单元都是逻辑的。
+After fine-tuning on all 60,000 training images, the autoencoder was tested on 10,000 new images and produced much better reconstructions than did PCA (Fig. 2B). 
+在对所有60,000个训练图像进行微调之后，自动编码器在10,000张新图像上进行了测试，并且产生了比PCA更好的重建（图2B）。
+A two-dimensional autoencoder produced a better visualization of the data than did the first two principal components (Fig. 3).
+与前两个主成分相比，二维自动编码器产生了更好的数据可视化（图3）。
+We also used a 625-2000-1000-500-30 autoencoder with linear input units to discover 30-dimensional codes for grayscale image patches that were derived from the Olivetti face data set (12). The autoencoder clearly outperformed PCA (Fig. 2C).
+我们还使用带有线性输入单元的625-2000-1000-500-30自动编码器来发现从Olivetti人脸数据集（12）导出的灰度图像块的30维代码。 自动编码器明显优于PCA（图2C）。
+
+When trained on documents, autoencoders produce codes that allow fast retrieval. 
+在对文档进行培训时，自动编码器会生成允许快速检索的代码。
+We represented each of 804,414 newswire stories (13) as a vector of document-specific probabilities of the 2000 commonest word stems, and we trained a 2000-500-250-125-10 autoencoder on half of the stories with the use of the multiclass cross-entropy error function 
+for the fine-tuning. 
+我们将804,414条新闻专线故事（13）分别作为2000年最常见词干的文档特有概率向量，并且我们使用多类分类训练了一半2000-500-250-125-10自编码器交叉熵误差函数进行微调。
+The 10 code units were linear and the remaining hidden units were logistic.
+这10个代码单元是线性的，其余的隐藏单元是逻辑的。
+When the cosine of the angle between two codes was used to measure similarity, the autoencoder clearly outperformed latent semantic analysis (LSA) (14), a well-known document retrieval method based on PCA (Fig. 4). 
+当两个代码之间角度的余弦用于度量相似度时，自动编码器明显优于潜在语义分析（LSA）（14），这是一种基于PCA的公知文档检索方法（图4）。
+Autoencoders (8) also outperform local linear embedding, a recent nonlinear dimensionality reduction algorithm (15).
+自动编码器（8）也优于局部线性嵌入，即最近的非线性降维算法（15）。
+
+Layer-by-layer pretraining can also be used for classification and regression. 
+逐层预训练也可用于分类和回归。
+On a widely used version of the MNIST handwritten digit recogni tion task, the best reported error rates are 1.6% for randomly initialized backpropagation and 1.4% for support vector machines. 
+在MNIST手写数字识别任务的广泛使用版本中，随机初始化反向传播的最佳报告错误率为1.6％，支持向量机的错误率为1.4％。
+After layer-by-layer pretraining in a 784-500-500-2000-10 network, backpropagation using steepest descent and a small learning rate achieves 1.2% (8). 
+在784-500-500-2000-10网络中进行逐层预训练后，使用最速下降和小学习率的反向传播达到了1.2％（8）。
+Pretraining helps generalization because it ensures that most of the information in the weights comes from modeling the images. 
+预训练有助于泛化，因为它确保权重中的大部分信息都来自对图像建模。
+The very limited information in the labels is used only to slightly adjust the weights found by pretraining.
+标签中非常有限的信息仅用于稍微调整预训练发现的权重。
+
+It has been obvious since the 1980s that backpropagation through deep autoencoders would be very effective for nonlinear dimensionality reduction, provided that computers were fast enough, data sets were big enough, and the initial weights were close enough to a good solution. 
+自20世纪80年代以来，通过深度自动编码器的反向传播对非线性降维非常有效，前提是计算机足够快，数据集足够大，初始权重足够接近以获得良好的解决方案。
+All three conditions are now satisfied. 
+现在满足所有三个条件。
+Unlike nonparametric methods (15, 16),autoencoders give mappings in both directions between the data and code spaces, and they can be applied to very large data sets because both the pretraining and the fine-tuning scale linearly in time and space with the number of training cases.
+与非参数方法（15,16）不同，自动编码器为数据和代码空间之间的双向映射提供映射，并且它们可以应用于非常大的数据集，因为预训练和微调在时间和空间上线性缩放， 的培训案例。
