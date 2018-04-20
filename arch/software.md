@@ -24,6 +24,7 @@ Linux开发工具被切割成一个个独立的小工具。各自处理不同的
 1.chromium
 
 	pacman -S chromium
+	sudo pacman -S　google-chrome
 	pacman -S pepper-flash
 
 2.输入法
@@ -58,7 +59,10 @@ pacman -S fcitx-sogoupinyin
 	pacman -S libreoffice-still-zh-cn
 
 	pacman -S vim
+	sudo pacman -S　emacs
+	sudo pacman -S　sublime-text-dev-imfix
 	pacman -S atom
+	
 
 	pacman -S audacious 
 
