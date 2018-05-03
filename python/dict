@@ -1,0 +1,69 @@
+＃dict 字典 ｛｝
+
+dict
+
+	1. 查找和插入的速度极快，不会随着key的增加而变慢；
+	    需要占用大量的内存，内存浪费多。
+
+	2.内部存放的顺序和key放入的顺序是没有关系
+
+
+	3. key计算位置的算法称为哈希算法（Hash）
+
+	4.key必须是不可变对象
+		在Python中，字符串、整数等都是不可变的
+		而list是可变的
+
+初始化
+
+	dict_name = {'Michael': 95, 'Bob': 75, 'Tracy': 85}
+
+存储单元
+
+	键-值（key-value）
+
+判断存在
+
+	１．通过in判断key是否存在：
+	'key'  in  dict_name
+
+	2.get( )
+	dict_name.get('key')
+	如果key不存在，可以返回None，或者自己指定的value：
+
+增加key
+
+	dict_name ['key']  = value
+
+删除key
+
+	dict_name.pop('key')
+
+#set
+
+set
+	1.key集合，无序,没有存储对应的value
+
+	2.set可以看成数学意义上的无序和无重复元素的集合
+
+	3.两个set可以做数学意义上的交集、并集等操作
+
+	4.不可以放入可变对象
+
+初始化
+	要创建一个set，需要提供一个list作为输入集合
+	set_name = set([1, 2, 3])
+
+增加元素
+
+	set_name.add(key)
+
+删除元素
+
+	set_name.remove(key)
+
+对于不变对象来说，调用对象自身的任意方法，也不会改变该对象自身的内容。
+相反，这些方法会创建新的对象并返回，这样，就保证了不可变对象本身永远是不可变的。
+
+
+

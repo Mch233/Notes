@@ -1,0 +1,108 @@
+__slots__
+	定义一个class，创建了一个class的实例后，可以给该实例绑定任何属性和方法
+
+	__slots__变量，来限制该class实例能添加的属性
+
+	__slots__定义的属性仅对当前类实例起作用，对继承的子类是不起作用的
+
+@property
+
+	@property装饰器－－－把一个方法变成属性调用
+
+	用法：
+		class Student(object):
+			@property  		
+		         def score(self):					#getter方法
+		         	return self._score
+
+		         @score.setter
+		         def score(self, value):				#setter方法
+		         	if not isinstance(value, int):
+		            		raise ValueError('score must be an integer!')
+		         	if value < 0 or value > 100:
+		            		raise ValueError('score must between 0 ~ 100!')
+		         	self._score = value
+
+	只读属性
+
+		只定义getter方法，不定义setter方法就是一个只读属性
+
+多继承
+
+	class Son(Father1, Father2):  
+	通过多重继承，一个子类就可以同时获得多个父类的所有功能
+
+	MixIn
+		类似接口？包含实现
+
+定制类
+
+	__str__
+
+		返回一个好看的字符串
+
+	__iter__
+
+		__iter__()方法，返回一个迭代对象
+
+		Python的for循环不断调用该迭代对象的__next__()方法拿到循环的下一个值，直到遇到StopIteration错误时退出循环。
+
+		例：写一个Fib类，可以作用于for循环
+
+			class Fib(object):
+		    		def __init__(self):
+		        			self.a, self.b = 0, 1 						# 初始化两个计数器a，b
+
+		    		def __iter__(self):
+		        			return self 								# 实例本身就是迭代对象，故返回自己
+
+		    		def __next__(self):
+		        			self.a, self.b = self.b, self.a + self.b 		# 计算下一个值
+		        			if self.a > 100000: 						# 退出循环的条件
+		            			raise StopIteration()
+		        			return self.a 							# 返回下一个值
+
+	__getitem__
+		按照下标取出元素
+		例：
+			class Fib(object):
+		    		def __getitem__(self, n):
+		        			if isinstance(n, int): 			# n是索引
+		          			 a, b = 1, 1
+		            			for x in range(n):
+		                				a, b = b, a + b
+		            			return a
+		        			if isinstance(n, slice): 		# n是切片
+		            			start = n.start
+		            			stop = n.stop
+		            			if start is None:
+		                				start = 0
+		            			a, b = 1, 1
+		            			L = []
+		            			for x in range(stop):
+		                				if x >= start:
+		                    				L.append(a)
+		                				a, b = b, a + b
+		            			return L
+
+	__getattr__
+
+	__call__
+
+		判断一个对象是否能被调用，能被调用的对象就是一个Callable对象，
+		通过callable()函数，判断
+
+使用枚举类
+
+	from enum import Enum
+
+元类　metaclass
+
+	type()动态创建类
+
+	metaclass控制类的创建行为，允许创建类或者修改类。
+	metaclass的类名总是以Metaclass结尾
+
+
+
+

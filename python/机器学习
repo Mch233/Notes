@@ -1,0 +1,22 @@
+下载脚本
+https://bootstrap.pypa.io/get-pip.py
+安装脚本
+sudo python3 get-pip.py
+
+pip --version
+
+numpy :科学运算，主要是矩阵的运算。提供数组。
+
+scipy：主要是一些科学工具集，信号处理工具集  数值计算。
+
+scikit-learn：大量机器学习算法。
+
+matplotlib：画图工具安装命令：
+
+pip3 install --user Numpy
+
+pip3 install --user scipy
+
+pip3 install --user scikit-learn
+
+pip3 install --user matplotlib

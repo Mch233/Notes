@@ -1,0 +1,48 @@
+函数
+
+数值类型转换
+
+	1. int(  )　int/float --> int
+
+	2. float(  )   str --> float
+
+	3. str(  )  float /int -->  str
+
+	4. bool(  ) int /str --> bool
+
+函数别名
+
+	把函数名赋给一个变量
+
+常用函数
+
+	abs(  )	#绝对值
+
+	max(  )	＃取最大
+
+	help(fname)
+
+定义
+	def function (   ):
+	    
+	        return 
+
+导入函数
+
+	from filename import function
+
+空函数
+
+	def none( ):
+                pass
+
+ 参数检查
+
+ 	python检查参数个数，不查类型
+ 	＃应用isinstance(x, (int, float))　只允许整数和浮点数类型的参数
+ 	 
+返回“多值”
+
+	 return多个值，但其实是一个tuple,省略了括号
+	 多个变量可以同时接收一个tuple，按位置赋给对应的值
+

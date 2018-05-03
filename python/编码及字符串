@@ -1,0 +1,33 @@
+#编码
+
+Unicode　＃统一编码
+
+在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就转换为UTF-8编码
+
+
+＃字符串 str
+
+ord('s')		#获取字符的整数表示
+chr(3243) 	#把编码转换为对应的字符
+
+'ABC' 		#str   以unicode编码　内存中
+b'ABC'		#bytes 　网络传输，硬盘中
+
+＃编码转换
+	＃　1. 　str --> bytes
+	＃纯英文的str可以用ASCII编码为bytes，含有中文的str可以用UTF-8编码为bytes
+
+	 'ABC'.encode('ascii')　　
+						
+	#    2. 　bytes --> str
+
+	 b'ABC'.decode('ascii')　
+
+# len()  		#计算　str字符数　或　bytes字节数
+
+#  'Hi, %s, you have $ %d.' % ('Michael', 1000000)
+    'Hi, Michael, you have $ 1000000.'
+
+
+
+
