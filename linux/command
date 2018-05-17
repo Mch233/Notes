@@ -1,0 +1,14 @@
+系统状态	screenfetch
+
+取得超级权限	sudo su
+更新系统	pacman -Syu
+
+同步时间	ntpd -q -g
+		date 日月时间年
+
+进程
+　	方法一	pgrep name
+		kill -s ９ id
+
+	方法二	ps　－ef
+		kill -s ９ id

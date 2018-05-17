@@ -1,0 +1,44 @@
+常用指令
+
+touch  创建空文件
+
+echo   创建带有内容的文件。
+
+cat    查看文件内容
+
+wc     统计文本中行数、字数、字符数
+
+grep   在文本文件中查找某个字符串
+
+ln     创建链接文件
+
+more、less  分页显示文本文件内容
+
+head、tail    显示文件头、尾内容
+
+ctrl+alt+F1  命令行全屏模式
+
+ 
+
+系统管理命令
+stat   显示指定文件的详细信息，比ls更详细
+
+top    动态显示当前耗费资源最多进程信息
+
+ps     显示瞬间进程状态 ps -aux
+
+du     查看目录大小 du -h /home带有单位显示目录信息
+
+df     查看磁盘大小 df -h 带有单位显示磁盘信息
+
+ifconfig     查看网络情况
+
+ping         测试网络连通
+
+netstat      显示网络状态信息
+
+clear        清屏
+
+alias        对命令重命名 如：alias showmeit="ps -aux" ，另外解除使用unaliax showmeit
+
+kill         杀死进程，可以先用ps 或 top命令查看进程的id，然后再用kill命令杀死进程。

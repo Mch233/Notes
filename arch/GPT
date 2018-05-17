@@ -1,0 +1,24 @@
+分区模式之GPT
+parted # 既可以进行MBR分区，也可以进行GPT分区
+
+help                      #查看帮助信息
+
+parted -a optimal /dev/sda      优化分区对齐
+
+select /dev/sdc           #切换到第三块磁盘
+
+mklabel gpt               #指定分区表类型，使用GPT分区模式
+mklabel msdos             #使用MBR分区模式
+
+print                     #查看当前磁盘的分区信息
+print all                 #查看所有磁盘的分区信息
+
+
+# 分区
+mkpart test 2000 3000 # 直接设置分区名和大小，此时已经有两个分区了
+
+rm 3  #删除分区，3是分区编号
+
+unit GB  #单位转换为GB
+
+quit    #退出

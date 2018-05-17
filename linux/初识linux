@@ -1,0 +1,57 @@
+与windows区别
+	严格区分大小写
+	一切皆为文件
+	不区分文件类型
+		压缩包：*.gz  *.bz2  *.tar.bz2  *.tgz
+		二进制软件包：*.rpm
+		网页文件：*.html  *.php
+		脚本文件：*.sh
+		配置文件：*.conf
+
+常用目录的作用
+/根目录
+/bin命令保存目录
+/boot启动目录，启动相关文件
+/dev设备文件保存目录
+/etc配置文件保存目录
+/home普通用户的家目录
+/lib系统库保存目录
+/mnt系统挂载目录
+/media挂载目录
+/root超级用户的家目录
+/tmp临时目录
+/sbin命令保存目录（超级用户）
+/proc直接写入内存的
+/sys
+/usr系统软件资源目录
+   /usr/bin/系统命令（普通）
+   /usr/sbin/（root）
+/var系统相关文档内容
+
+yum
+在线安装
+
+源码安装
+指定安装目录:/usr/local/软件名/
+源码保存位置:/usr/local/src/
+
+	安装过程：
+		下载源码包
+		解压缩
+		进入解压缩目录
+		./configure
+		./configure --prefix=/usr/local/xxx
+			定义需要的功能选项--help
+			检测环境是否符合安装要求
+			把定义好的功能选项和检测系统环境的信息写入Makefile文件
+		make
+		make install编译安装
+		make clean
+		
+
+绝对路径服务管理
+/usr/local/
+
+RPM启动
+/etc/rc.d/init.d/httpd start
+service httpd start
