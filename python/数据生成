@@ -1,0 +1,43 @@
+多维正态分布
+X为样本特征，Y为样本簇类别， 共1000个样本，每个样本2个特征，共４个簇
+
+X1, Y1 = make_gaussian_quantiles(n_samples=1000,n_features=2, n_classes=4) 
+
+	x样本数据集
+	y样本数据集的标签
+	mean : array of shape [n_features], optional (default=None)＃特征均值
+
+	cov : float, optional (default=1.)＃样本协方差的系数
+
+	n_samples : int, optional (default=100)＃样本点个数
+
+	n_features : int, optional (default=2)＃每个样本的特征数
+
+	n_classes : int, optional (default=3)　＃几簇
+
+	shuffle : boolean, optional (default=True)＃混乱的样本
+
+	random_state : int, RandomState instance or None, optional (default=None)#随机数生成器
+
+聚类模型数据
+sklearn.datasets.make_blobs(n_samples=100, n_features=2, centers=3, cluster_std=1.0, center_box=(-10.0, 10.0), shuffle=True, random_state=None)
+
+centers=[[-1,-1], [1,1], [2,2]], cluster_std=[0.4, 0.5, 0.2]
+
+return  x样本数据集
+	y数据集的标签
+
+	n_samples : int, optional (default=100)＃样本点个数
+
+	n_features : int, optional (default=2)＃每个样本特征数
+
+	centers : int or array of shape [n_centers, n_features], optional＃中心数量或中心位置
+
+	cluster_std : float or sequence of floats, optional (default=1.0)＃集群的标准偏差
+
+	center_box : pair of floats (min, max), optional (default=(-10.0, 10.0))＃当中心随机生成时，每个集群中心的包含数
+
+	shuffle : boolean, optional (default=True)＃清洗样本
+
+	random_state : int, RandomState instance or None, optional (default=None)
+	If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random.
