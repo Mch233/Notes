@@ -1,0 +1,161 @@
+set encoding=utf-8
+
+"启动语法检测
+syntax enable
+syntax on
+
+
+" 其他设置
+set showcmd                         " 显示输入的命令
+set showmatch                       " 设置匹配模式，显示匹配的括号
+set mouse=a                         " 使鼠标可用，可以通过鼠标点击来定位光标或者打开文件但是此时鼠标右键菜单不可用
+set number                          " 显示行号
+set backspace=indent,eol,start      " 使退格键可以正常使用
+set foldenable                      " 开启折叠选项
+set completeopt=longest,menu        " 让Vim的补全才当行为与一般IDE一致
+set wildmenu
+set wildmode=list:full              " 在命令行中，按下Tab键，显示当前所有可能的命令
+
+
+" 设置当前缓冲区的搜索选项
+set ignorecase                      " 忽略大小写
+set smartcase                       " 开启智能大小写敏感
+set hlsearch                        " 高亮搜索得到的结果
+set incsearch                       " 开启递增搜索模式,随着键入待搜索文本，不断的进行搜索
+set conceallevel=0
+set laststatus=2
+hi Normal  ctermbg=none
+
+"修改vimrc文件之后，自动加载
+autocmd! bufwritepost .vimrc source %
+
+
+
+" 插件列表
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+Plugin 'scrooloose/nerdtree'                       "NERDTree插件:      显示目录树形结构
+
+Plugin 'majutsushi/tagbar'                            "tagbar插件         用于显示函数列表
+
+Plugin 'kien/ctrlp.vim'                                      "CtrlP插件:         用于文件搜索，支持模糊查找         
+
+Plugin 'rhysd/vim-clang-format'                       "Clang-Format插件： 用于格式化代码风格
+
+Plugin 'altercation/vim-colors-solarized'      "solarized配色插件
+
+Plugin 'bling/vim-airline'					 "airline插件
+Plugin 'vim-airline/vim-airline-themes'
+
+Plugin 'tomasr/molokai'      "molokai配色插件
+
+call vundle#end()   
+filetype plugin indent on 
+
+
+
+"NERDTree 配置
+let NERDTreeWinPos='right'
+let NERDTreeWinSize=31                                                  " 设置NERDTree界面宽度为31
+let NERDTreeChDirMode=2                                                 " 可修改root路径
+let NERDTreeShowBookmarks=1                                             " 显示Bookmarks标签
+let NERDTreeStatusline='NERDTree'                                       " 显示Bookmarks标签
+" 开闭目录树窗口
+map <F10> :NERDTreeToggle<CR>
+
+" 设置tagbar插件
+let g:tagbar_iconchars = ['▸', '▾']
+let g:tagbar_sort = 0
+let g:tagbar_show_visibility = 1
+highlight  TagbarHighlight guifg=Blue ctermfg=Blue
+let g:tagbar_ctags_bin='/usr/bin/ctags'  " 设置ctags所在路径
+let g:tagbar_left = 1                                                   
+" 开闭函数结构窗口
+map <F12> :TagbarToggle<CR>
+
+"CtrlP设置
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip 
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+  let g:ctrlp_user_command = 'find %s -type f'   
+
+"Clang-Format 配置
+" 配置的相关选项参照网址 "http://clang.llvm.org/docs/ClangFormatStyleOptions.html#"
+let g:clang_format#style_options = {
+            \ "BasedOnStyle" : "Google",
+            \ "Standard" : "C++11",
+            \ "BreakBeforeBraces" : "Allman",
+            \ "AlignAfterOpenBracket" : "Align",
+            \ "SpaceBeforeAssignmentOperators" : "true",
+            \ "AlignOperands" : "false",
+            \ "AlignTrailingComments" : "true",
+            \ "AllowAllParametersOfDeclarationOnNextLine" : "false",
+            \ "AllowShortCaseLabelsOnASingleLine" : "false",
+            \ "AllowShortIfStatementsOnASingleLine" : "false",
+            \ "AllowShortLoopsOnASingleLine" : "false",
+            \ "AlwaysBreakTemplateDeclarations" : "false",
+            \ "BinPackArguments" : "false",
+            \ "BinPackParameters" : "false",
+            \ "BreakBeforeBinaryOperators" : "None",
+            \ "BreakConstructorInitializersBeforeComma" : "true",
+            \ "MaxEmptyLinesToKeep" : 2,
+            \ "ReflowComments" : "false",
+            \ "SpaceAfterCStyleCast" : "true",
+            \ "ColumnLimit" : 120,
+            \ "IndentWrappedFunctionNames" : "true",
+            \ "AccessModifierOffset" : -2,
+            \ "AllowShortFunctionsOnASingleLine" : "Empty",
+            \ "PointerAlignment" : "Left",
+            \ "SpaceBeforeParens" : "Never"}
+" 格式化代码风格为Allman
+map <F7> :ClangFormat<CR>
+
+" 配色
+"syntax enable
+"let g:solarized_termtrans = 1
+"set background=dark
+"colorscheme solarized
+
+colorscheme  molokai  
+set t_Co=256
+set background=dark
+
+" airline
+let g:airline_powerline_fonts = 1  
+let g:airline_theme='bubblegum'
+
+
+
+" 恢复上次文件打开位置
+set viminfo='10,\"100,:20,%,n~/.viminfo
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif"'")"'")")'"
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+let g:cpp_no_function_highlight = 1
+
+
+
+
+
+
+

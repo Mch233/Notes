@@ -1,0 +1,27 @@
+copy 外界- vim
+	Shift + insert
+
+
+copy vim - vim
+	1.分割窗口
+		:sp 横向
+		:vsp 纵向
+
+	2.在另一窗口打开文件
+		:e location/filename
+	
+	3.切换窗口
+		Ctrl + w 
+		上下左右
+	
+	4.copy
+	
+	5.关闭窗口
+		:close
+	
+
+列块操作
+	Ctrl + v　选择操作
+	I	操作
+	ESC
+

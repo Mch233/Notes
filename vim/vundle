@@ -1,0 +1,60 @@
+将它放在.vimrc的顶部以使用Vundle。 
+
+1.安装Vundle
+	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+2.配置 .vimrc 文件。
+ 
+终端
+	cp /usr/share/vim/vim80/vimrc_example.vim ~/.vimrc 
+	vim ~/.vimrc
+
+	写入
+	set nocompatible
+	filetype off
+	 
+	set rtp+=~/.vim/bundle/Vundle.vim
+	call vundle#begin()
+
+	Plugin 'VundleVim/Vundle.vim'
+	Plugin 'tpope/vim-fugitive'
+	Plugin 'git://git.wincent.com/command-t.git'
+	Plugin 'file:///home/gmarik/path/to/plugin'
+	Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+	Plugin 'Solarized'	 		" 配色方案
+	Plugin 'kien/ctrlp.vim'	 		" 文件，代码搜索工具
+	Plugin 'suan/vim-instant-markdown'
+
+
+	call vundle#end()   
+	filetype plugin indent on 
+
+3.安装插件：
+
+	启动vim并运行：PluginInstall
+
+
+插件安装方式
+	１．从Github进行安装：
+	Plugin 'user/plugin'
+	２．从http://vim-scripts.org/vim/scripts.html进行安装：
+	Plugin 'plugin_name'
+	３，从另一个git软件库进行安装：
+	Plugin 'git://git.another_repo.com/plugin'
+
+
+:PluginInstall
+:PluginList -列举出列表中(.vimrc中)配置的所有插件
+:PluginInstall -安装列表中全部插件
+:PluginInstall! -更新列表中全部插件
+:PluginSearch foo -查找foo插件
+:PluginSearch! foo -刷新foo插件缓存
+:PluginClean -清除列表中没有的插件
+:PluginClean! -清除列表中没有的插件
+
+
+vim ~/.vimrc
+syntax on	" 语法高亮
+set number	" 显示行号
+set guifont=Courier_new:h15:b:cDEFAULT　" 设置字体和大小
+

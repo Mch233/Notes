@@ -1,0 +1,3 @@
+#Anaconda
+export Anaconda_HOME=/opt/anaconda/
+export PATH=$Anaconda_HOME/bin:$PATH 

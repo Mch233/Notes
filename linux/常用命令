@@ -16,7 +16,8 @@
 	date
 
 ＃改变权限
-	
+	查看权限：ls -l
+
 	改变文件的权限：chmod
 		读r:4　　写w:2 　执行x:1  rwx=7 			//owner group others
 		chmod 777 .bashrc

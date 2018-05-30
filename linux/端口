@@ -1,0 +1,49 @@
+FTP（文件传输协议）：端口号　20 21
+SSH(安全shell协议)：端口号　22
+DNS(域名系统)：端口号　53
+http(超文本传输协议)：端口号　80
+SMTP(简单邮件传输协议)：端口号　25
+POP3 (邮局协议３代)：端口号　110
+
+网卡信息文件
+/etc/sysconfig/network-scripts/ifcfg-eth0
+	DEVICE网卡设备名
+	BOOTPROTO是否自动获取ip
+	HWADDR MAC地址
+	NM_CONTROLLED是否可以由Network Manager图形管理工具托管
+	ONBOOT是否随网络服务启动，eth0生效
+	TYPE 连接类型
+	UUID唯一识别码
+	IPADDR IP地址
+	NETMASK子网掩码
+	GATEWAY 网关
+	DNS1 DNS
+	IPV6INIT 
+	USERCTL 不允许非root用户控制此网卡
+
+主机名文件
+/etc/sysconfig/network
+	NETWORKING=yes
+	HOSTNAME=
+
+	hostname [主机名]
+
+DNS配置文件
+/etc/resolv.conf
+	nameserver
+	search localhost
+
+ifconfig查看与配置网络状态命令
+ifdown 网卡设备名#禁用该网卡设备
+
+ifup 网卡设备名 #启用该网卡设备
+
+netstat 查询网络状态
+选项：
+-t TCP协议端口
+-u UDP协议端口
+-n 
+
+route
+-l
+-a
