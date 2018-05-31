@@ -11,3 +11,6 @@ ReLU 激活函数
 
 𝑥：表示一个𝑛𝑥维数据，为输入数据，维度为(𝑛𝑥, 1)；
 𝑋是一个规模为𝑛𝑥乘以𝑚的矩阵
+
+git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
+sh ~/.vim_runtime/install_awesome_vimrc.sh

@@ -5,7 +5,7 @@
 2.配置 .vimrc 文件。
  
 终端
-	cp /usr/share/vim/vim80/vimrc_example.vim ~/.vimrc 
+	cp /usr/share/vim/vim81/vimrc_example.vim ~/.vimrc 
 	vim ~/.vimrc
 
 	写入

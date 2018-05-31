@@ -1,37 +1,70 @@
+"==================="
+"1.基本设置"
+"==================="
+set wildmenu"按TAB键时命令行自动补齐"
+set ignorecase"忽略大小写"
+set number "显示行号"
+set visualbell"禁止响铃"
+set ruler"显示当前光标位置"
+set autoread"文件在Vim之外修改过，自动重新读入"
+set autochdir"当前目录随着被编辑文件的改变而改变"
+set nocp "使用vim而非vi"
+set mouse=a"开启鼠标支持"
+map 9 $"通过9跳转到行末尾,0默认跳转到行首"
+map <silent>  <C-A>  gg v G "Ctrl-A 选中所有内容"
+filetype on "启动文件类型检查"
+filetype plugin on "运行vim加载文件类型插件"
 set encoding=utf-8
 
-"启动语法检测
-syntax enable
+"==================="
+"2.程序开发相关"
+"==================="
+"编译和运行程序的快捷键"
+map <silent>  <C-F5> :make %:r <CR>:!./%:r<CR>  "Ctrl+F5: 执行makefile文件"
+map <silent>  \rr :!gcc  -Wall -g  %  -lm -o  %:r<CR> :!./%:r<CR>"\rr: 编译并运行当前文件的对应程序"
+map  <silent>  \rc :!gcc  -Wall -g -c % <CR>"\rc:编译当前文件"
+syn on "开启语法高亮功能"
+syntax enable"启动语法检测
 syntax on
 
+"============"
+"3. tabpages切换"
+"============"
+map < :tabpre<CR> 
+map > :tabnex<CR>
 
-" 其他设置
-set showcmd                         " 显示输入的命令
-set showmatch                       " 设置匹配模式，显示匹配的括号
-set mouse=a                         " 使鼠标可用，可以通过鼠标点击来定位光标或者打开文件但是此时鼠标右键菜单不可用
-set number                          " 显示行号
-set backspace=indent,eol,start      " 使退格键可以正常使用
-set foldenable                      " 开启折叠选项
-set completeopt=longest,menu        " 让Vim的补全才当行为与一般IDE一致
-set wildmenu
-set wildmode=list:full              " 在命令行中，按下Tab键，显示当前所有可能的命令
+"============="
+" 4.设置缩进"
+"============="
+set cindent "c/c++自动缩进"
+set smartindent
+set autoindent"参考上一行的缩进方式进行自动缩进"
+filetype indent on "根据文件类型进行缩进"
+set softtabstop=4 "4 character as a tab"
+set shiftwidth=4
+set smarttab 
 
+"================="
+"5. 当前文件内搜索选项"
+"================="
+set hlsearch "开启搜索结果的高亮显示"
+set incsearch "边输入边搜索(实时搜索)"
 
-" 设置当前缓冲区的搜索选项
-set ignorecase                      " 忽略大小写
-set smartcase                       " 开启智能大小写敏感
-set hlsearch                        " 高亮搜索得到的结果
-set incsearch                       " 开启递增搜索模式,随着键入待搜索文本，不断的进行搜索
-set conceallevel=0
-set laststatus=2
-hi Normal  ctermbg=none
+"============="
+"6. 查找和替换文本"
+"============="
+nmap ;s :%s/\<<C-R>=expand("<cword>")<CR>\>/
+nmap ;g :vimgrep <C-R>=expand("<cword>")<CR>
 
-"修改vimrc文件之后，自动加载
-autocmd! bufwritepost .vimrc source %
+"========================"
+"7.txt文件按照wiki语法高亮"
+"========================"
+ autocmd BufNewFile *.txt set ft=confluencewiki 
+ autocmd BufEnter *.txt set ft=confluencewiki
 
-
-
-" 插件列表
+"========================"
+"8.插件"
+"========================"
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -40,37 +73,35 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'git://git.wincent.com/command-t.git'
-
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
-Plugin 'scrooloose/nerdtree'                       "NERDTree插件:      显示目录树形结构
+Plugin 'scrooloose/nerdtree'                       "NERDTree显示目录树形结构
 
-Plugin 'majutsushi/tagbar'                            "tagbar插件         用于显示函数列表
+Plugin 'majutsushi/tagbar'                            "tagbar显示函数列表
 
-Plugin 'kien/ctrlp.vim'                                      "CtrlP插件:         用于文件搜索，支持模糊查找         
+Plugin 'kien/ctrlp.vim'        "CtrlP文件搜索，支持模糊查找         
 
-Plugin 'rhysd/vim-clang-format'                       "Clang-Format插件： 用于格式化代码风格
+Plugin 'rhysd/vim-clang-format'                       "Clang-Forma格式化代码
 
-Plugin 'altercation/vim-colors-solarized'      "solarized配色插件
+Plugin 'altercation/vim-colors-solarized'      "solarized配色
 
-Plugin 'bling/vim-airline'					 "airline插件
+Plugin 'bling/vim-airline'					 "airline状态栏
 Plugin 'vim-airline/vim-airline-themes'
 
-Plugin 'tomasr/molokai'      "molokai配色插件
+Plugin 'tomasr/molokai'      "molokai配色
 
 call vundle#end()   
 filetype plugin indent on 
 
-
-
+"========================"
+"9.插件配置"
+"========================"
 "NERDTree 配置
 let NERDTreeWinPos='right'
 let NERDTreeWinSize=31                                                  " 设置NERDTree界面宽度为31
 let NERDTreeChDirMode=2                                                 " 可修改root路径
 let NERDTreeShowBookmarks=1                                             " 显示Bookmarks标签
 let NERDTreeStatusline='NERDTree'                                       " 显示Bookmarks标签
-" 开闭目录树窗口
-map <F10> :NERDTreeToggle<CR>
 
 " 设置tagbar插件
 let g:tagbar_iconchars = ['▸', '▾']
@@ -79,12 +110,8 @@ let g:tagbar_show_visibility = 1
 highlight  TagbarHighlight guifg=Blue ctermfg=Blue
 let g:tagbar_ctags_bin='/usr/bin/ctags'  " 设置ctags所在路径
 let g:tagbar_left = 1                                                   
-" 开闭函数结构窗口
-map <F12> :TagbarToggle<CR>
 
 "CtrlP设置
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip 
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
@@ -123,15 +150,14 @@ let g:clang_format#style_options = {
             \ "AllowShortFunctionsOnASingleLine" : "Empty",
             \ "PointerAlignment" : "Left",
             \ "SpaceBeforeParens" : "Never"}
-" 格式化代码风格为Allman
-map <F7> :ClangFormat<CR>
 
 " 配色
+"solarized
 "syntax enable
 "let g:solarized_termtrans = 1
 "set background=dark
 "colorscheme solarized
-
+"molokai
 colorscheme  molokai  
 set t_Co=256
 set background=dark
@@ -140,22 +166,18 @@ set background=dark
 let g:airline_powerline_fonts = 1  
 let g:airline_theme='bubblegum'
 
+"========================"
+"10.插件快捷键"
+"========================"
+" 目录树窗口
+map <F10> :NERDTreeToggle<CR>
 
+" 函数结构窗口
+map <F12> :TagbarToggle<CR>
 
-" 恢复上次文件打开位置
-set viminfo='10,\"100,:20,%,n~/.viminfo
-au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif"'")"'")")'"
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let g:cpp_experimental_simple_template_highlight = 1
-let g:cpp_experimental_template_highlight = 1
-let g:cpp_concepts_highlight = 1
-let g:cpp_no_function_highlight = 1
+"CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 
-
-
-
-
-
-
+" 格式化代码
+map <F7> :ClangFormat<CR>
