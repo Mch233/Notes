@@ -1,0 +1,161 @@
+"==================="
+"1.基本设置"
+"==================="
+set wildmenu"按TAB键时命令行自动补齐"
+set ignorecase"忽略大小写"
+set number "显示行号"
+set ruler"显示当前光标位置"
+set autoread"文件在Vim之外修改过，自动重新读入"
+set autochdir"当前目录随着被编辑文件的改变而改变"
+set mouse=a"开启鼠标支持"
+map 9 $"通过9跳转到行末尾,0默认跳转到行首"
+map <silent>  <C-A>  gg v G "Ctrl-A 选中所有内容"
+filetype on "启动文件类型检查"
+filetype plugin on "运行vim加载文件类型插件"
+set encoding=utf-8
+set ambiwidth=double "防止特殊符号无法正常显示
+set nocompatible " 关闭 vi 兼容模式
+
+"==================="
+"2.程序开发相关"
+"==================="
+"编译和运行程序的快捷键"
+map <silent>  <C-F5> :make %:r <CR>:!./%:r<CR>  "Ctrl+F5: 执行makefile文件"
+map <silent>  \rr :!gcc  -Wall -g  %  -lm -o  %:r<CR> :!./%:r<CR>"\rr: 编译并运行当前文件的对应程序"
+map  <silent>  \rc :!gcc  -Wall -g -c % <CR>"\rc:编译当前文件"
+syn on "开启语法高亮功能"
+syntax enable"启动语法检测
+syntax on
+
+"============"
+"3. tabpages切换"
+"============"
+map < :tabpre<CR> 
+map > :tabnex<CR>
+
+"============="
+" 4.设置缩进"
+"============="
+set cindent "c/c++自动缩进"
+set smartindent
+set autoindent"参考上一行的缩进方式进行自动缩进"
+filetype indent on "根据文件类型进行缩进"
+set softtabstop=4 "4 character as a tab"
+set shiftwidth=4
+set smarttab 
+
+"================="
+"5. 当前文件内搜索选项"
+"================="
+set hlsearch "开启搜索结果的高亮显示"
+set incsearch "边输入边搜索(实时搜索)"
+
+"============="
+"6. 查找和替换文本"
+"============="
+nmap ;s :%s/\<<C-R>=expand("<cword>")<CR>\>/
+nmap ;g :vimgrep <C-R>=expand("<cword>")<CR>
+
+"========================"
+"7.txt文件按照wiki语法高亮"
+"========================"
+ autocmd BufNewFile *.txt set ft=confluencewiki 
+ autocmd BufEnter *.txt set ft=confluencewiki
+
+"========================"
+"8.插件"
+"========================"
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+Plugin 'scrooloose/nerdtree'                       "NERDTree显示目录树形结构
+
+Plugin 'majutsushi/tagbar'                            "tagbar显示函数列表
+
+Plugin 'kien/ctrlp.vim'        "CtrlP文件搜索，支持模糊查找         
+
+Plugin 'rhysd/vim-clang-format'                       "Clang-Forma格式化代码
+
+call vundle#end()   
+filetype plugin indent on 
+
+"========================"
+"9.插件配置"
+"========================"
+"NERDTree 配置
+let NERDTreeWinPos='right'
+let NERDTreeWinSize=31                                                  " 设置NERDTree界面宽度为31
+let NERDTreeChDirMode=2                                                 " 可修改root路径
+let NERDTreeShowBookmarks=1                                             " 显示Bookmarks标签
+let NERDTreeStatusline='NERDTree'                                       " 显示Bookmarks标签
+
+" 设置tagbar插件
+let g:tagbar_iconchars = ['▸', '▾']
+let g:tagbar_sort = 0
+let g:tagbar_show_visibility = 1
+highlight  TagbarHighlight guifg=Blue ctermfg=Blue
+let g:tagbar_ctags_bin='/usr/bin/ctags'  " 设置ctags所在路径
+let g:tagbar_left = 1                                                   
+
+"CtrlP设置
+let g:ctrlp_working_path_mode = 'ra'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip 
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+  let g:ctrlp_user_command = 'find %s -type f'   
+
+"Clang-Format 配置
+" 配置的相关选项参照网址 "http://clang.llvm.org/docs/ClangFormatStyleOptions.html#"
+let g:clang_format#style_options = {
+            \ "BasedOnStyle" : "Google",
+            \ "Standard" : "C++11",
+            \ "BreakBeforeBraces" : "Allman",
+            \ "AlignAfterOpenBracket" : "Align",
+            \ "SpaceBeforeAssignmentOperators" : "true",
+            \ "AlignOperands" : "false",
+            \ "AlignTrailingComments" : "true",
+            \ "AllowAllParametersOfDeclarationOnNextLine" : "false",
+            \ "AllowShortCaseLabelsOnASingleLine" : "false",
+            \ "AllowShortIfStatementsOnASingleLine" : "false",
+            \ "AllowShortLoopsOnASingleLine" : "false",
+            \ "AlwaysBreakTemplateDeclarations" : "false",
+            \ "BinPackArguments" : "false",
+            \ "BinPackParameters" : "false",
+            \ "BreakBeforeBinaryOperators" : "None",
+            \ "BreakConstructorInitializersBeforeComma" : "true",
+            \ "MaxEmptyLinesToKeep" : 2,
+            \ "ReflowComments" : "false",
+            \ "SpaceAfterCStyleCast" : "true",
+            \ "ColumnLimit" : 120,
+            \ "IndentWrappedFunctionNames" : "true",
+            \ "AccessModifierOffset" : -2,
+            \ "AllowShortFunctionsOnASingleLine" : "Empty",
+            \ "PointerAlignment" : "Left",
+            \ "SpaceBeforeParens" : "Never"}
+
+"========================"
+"10.插件快捷键"
+"========================"
+" 目录树窗口
+map <F10> :NERDTreeToggle<CR>
+
+" 函数结构窗口
+map <F12> :TagbarToggle<CR>
+
+"CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+" 格式化代码
+map <F7> :ClangFormat<CR>
