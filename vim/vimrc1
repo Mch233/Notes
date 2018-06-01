@@ -83,6 +83,8 @@ Plugin 'kien/ctrlp.vim'        "CtrlP文件搜索，支持模糊查找
 
 Plugin 'rhysd/vim-clang-format'                       "Clang-Forma格式化代码
 
+Plugin 'altercation/vim-colors-solarized'      "solarized配色
+
 call vundle#end()   
 filetype plugin indent on 
 
@@ -144,6 +146,14 @@ let g:clang_format#style_options = {
             \ "PointerAlignment" : "Left",
             \ "SpaceBeforeParens" : "Never"}
 
+
+" 配色
+"solarized
+let g:solarized_termtrans = 1
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors=256
+
 "========================"
 "10.插件快捷键"
 "========================"
@@ -159,3 +169,5 @@ let g:ctrlp_cmd = 'CtrlP'
 
 " 格式化代码
 map <F7> :ClangFormat<CR>
+
+
