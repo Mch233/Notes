@@ -1,0 +1,27 @@
+全连接层
+    tf.layers.dense(
+        inputs,
+        units,
+        activation=None,
+        use_bias=True,
+        kernel_initializer=None,
+        bias_initializer=tf.zeros_initializer(),
+        kernel_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        bias_constraint=None,
+        trainable=True,
+        name=None,
+        reuse=None
+
+        inputs: 该层的输入
+
+            units: 输出的大小（维数），整数或long
+
+            activation: 使用什么激活函数（神经网络的非线性层），默认为None，不使用激活函数
+
+            use_bias: 使用bias为True（默认使用），不用bias改成False即可
+
+
+tf.InteractiveSession():在运行图的时候，插入一些计算图，这些计算图是由某些操作(operations)构成的

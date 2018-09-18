@@ -1,0 +1,72 @@
+################################## create tensorflow structure start ##############################
+#外界数据输入
+input0 = tf.placeholder(tf.float32)
+output = 
+
+#权重定义
+Weights = tf.Variable( )#定义变量
+biases = tf.Variable( )
+
+#前向传播
+y = 
+
+#损失函数
+loss =
+
+#优化器--减少误差
+optimizer =
+train
+
+#变量初始化
+init = tf.global_variables_initializer()
+sess.run(init)
+
+
+#################################### create tensorflow structure end ##############################
+with tf.Session() as sess:
+	sess.run(output,feed_dict={input0: ,input: })
+	sess.run(init)
+
+
+
+
+
+
+##################后记######################
+激励函数必须可微
+激励函数不能随意选，梯度爆炸，梯度消失
+	卷积神经网络CNN： relu
+	循环神经网络： relu or tanh
+
+梯度也消失
+y值稳定在0上
+
+欠拟合和梯度消失有如下几个可能：
+1.权重初始化有问题，只使用了简单的random而没有让其科学的生成随机值，会造成梯度下降过程中梯度消失
+2.神经网络层数太深，过深的神经网络会造成前几层神经网络上的神经元学习的东西过少，进而导致权重变化慢，造成了梯度不下降的现象
+
+###################
+加速神经网络训练
+	优化器
+		sgd批量训练
+
+	神经网络参数
+		MomentumOptimizer
+		AdamOptimizer
+
+	Momentum
+	m = b1 * m - Learning rate * dx
+	w += m
+
+学习率
+	AdaGrad
+	v += dx ^ 2
+	w += -Learning rate * dx / 根号v
+
+####################################
+Tensorboard可视化
+
+过拟合 
+	加数据 or 正则化
+
+

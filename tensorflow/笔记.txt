@@ -1,0 +1,163 @@
+工具包
+	１.Protocol Buffer(.proto) #用来处理结构化数据  
+		主要任务：  结构化数据　－＞序列化　－＞结构化
+		序列化：将结构化的数据变成数据流的格式，变成二进制不可读的字符串
+
+	2.Bazel #编译工具
+		py_binary#编译为可执行文件
+		py_library#编译为测试程序
+		py_test#编译成库函数
+		项目空间
+		    WORKSPACE文件：定义了对外部资源的依赖关系
+		    BUILD文件：定义编译目标（无顺序）
+			py_library(		    #指定编译方式py_library或py_binary
+			    name = " ",		    #编译目标的名字
+			    srcs = [		    #编译所需要的源代码
+				" ",	
+			    ],
+			    deps = [		    #编译所需要的依赖环境
+				": ",	
+			    ],
+			)
+
+模型
+	计算模型：计算图
+		    功能：隔离，管理张量和计算，通过集合管理资源
+		    方法：
+			    tf.get_default_graph    #获取当前默认的计算图
+			    tf.Graph		    #生成计算图
+			    tf.Graph.device	    #指定运算计算的设备
+			    tf.add_to_collection    #将资源加入一个或多个集合中
+			    tf.get_collection	    #获取一个集合里的所有资源
+
+	数据模型：张量（用来管理数据）
+		　 张量本身没有存储具体数字，仅有三个属性name，shape，type
+		 　方法：
+			  　.get_shape		    #获取维度信息
+			 　tf.Session().run(  )	    #得到计算结果
+
+	运行模型：会话sess
+		　#缺点：异常退出时资源无法释放
+		　sess = tf.Session()
+		　sess.run(...)
+		　sess.close()
+		
+		　#利用了python机制避免了内存泄露
+		　with tf.Session() as sess:
+		    sess.run(...)
+
+变量
+	传递和管理神经网络中的训练参数－－－通过变量名称
+	#变量的声明
+	tf.Variable() 
+	#初始化变量
+	init = tf.global_variables_initializer()
+	sess.run(init)
+
+输入数据
+	#placeholder接收外部输入的数据
+	tf.placeholder(tf.float32,shape(3,2),name="input")#3个2维样例数据
+
+激活函数
+	 tf.nn.relu
+	 tf.sigmoid
+	 tf.tanh
+
+学习率	
+    不能过大也不能过小
+    指数衰减法
+	tf.train.exponential_decay	#staircase=true每完整的过完一遍训练数据，学习率就减小一次
+
+	decayed_learning_rate= \
+	    learning_rate * decay_rate ^ (global_step / decay_steps)
+
+损失函数
+	1.分类问题
+		Softmax回归：将神经网络前向传播得到的结果变成概率分布
+	          #交叉熵：两个概率分布之间的距离
+	    	y_ * tf.log(tf.clip_by_value(y,le-10,1.0))　　return :n*m n个样本m分类
+			tf.clip_by_value:将张量中的数值限定在一个范围之内，避免运算错误
+			tf.log:所以元素依次求对数
+			* 矩阵对于位置上的元素相乘
+
+	    #使用了softmax回归之后的交叉熵损失函数	
+	    tf.nn.softmax_cross_entropy_with_logit(y,y_)
+
+	    # 交叉熵评估代价
+		tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))
+	
+	回归问题
+    	均方误差
+    		tf.reduce_mean(tf.square(y_ - y))
+
+    	自定义损失函数
+
+优化器
+    tf.train
+    gradient descent #梯度下降
+	optimizer = tf.train.GradientDescentOptimizer(0.01)
+	train = optimizer.minimize(loss)
+	
+正则化
+	通过限制权重的大小，使得模型不能任意拟合训练数据中的随机噪声
+
+          L1正则化　参数会变稀疏，不可导
+          tf.contrib.layers.l1_regularizer
+
+          L2
+          tf.contrib.layers.l2_regularizer
+
+滑动平均模型
+    使模型在测试数据上更健壮
+    tf.train.ExponentialMovingAverage
+
+
+训练神经网络的过程
+	１．定义神经网络的结构和前向传播的输出结果（构建计算图）
+	２．定义损失函数以及选择反向传播优化的算法
+	３．生成会话（tf.Session）并且在训练数据上反复运行反向传播优化算法
+	４．在测试集或验证集上对准确率进行评测
+
+常用函数：
+	tf.assign() #赋值更改值
+	
+	tf.matmul   #矩阵乘法
+
+	tf.argmax   #返回最大值所在的下标
+
+	tf.equal(A, B)#是对比这两个矩阵或者向量的相等的元素，如果是相等的那就返回True，反正返回False，返回的值的矩阵维度和A是一样的
+
+	#随机数生成函数
+		tf.random_normal    #正太分布seed参数设定随机种子，可以保证每次运行结果一样
+		tf.truncated_normal #正太分布
+		tf.random_uniform   #均匀分布
+		tf.random_gamma	    #gamma分布
+
+	#常数生成函数
+		tf.zeros
+		tf.ones
+		tf.fill
+		tf.constant
+
+常识
+	卷积神经网络对空间结构信息有很好的利用
+	Softmax Regression,Dropout,Adagrad,ReLU,卷积层，池化层
+	损失函数：当前预测值与真实值之间的差距
+	batch:训练数据大小
+	多分类问题，ｎ维数组作为输出结果，如果一个样本属于类别ｋ那么对于输出结点为１其余为０
+
+
+tensorflow核心程序
+	构建计算图，运行计算图
+	计算图：一系列TensorFlow操作排列成的节点图
+		　  组合Tensor节点的操作来构成更为复杂的计算
+
+	TensorFlow 的计算由一个有向图描述，这个图中由一个节点集合组成。
+	该图表达了数据流计算，作出了一些类型的节点保持和更新持久状态和让分支及循环控制结构类似于 Naiad 的行为方式的扩展。
+	模型的参数典型地就存放在变量（variable）引用的张量中，并作为模型训练图的 Run 的一部分进行更新
+
+tensorboard可视化工具
+	展示计算图的图片和记录训练过程，分析训练效果
+
+	输入命令： tensorboard --logdir logs同时将终端中的输出复制到浏览器中，便可以显示计算图了，使用tensorboard --help 查看更多详细参数
+
