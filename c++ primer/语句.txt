@@ -1,0 +1,59 @@
+条件语句
+if-else
+    1.if 或 else 加上{}
+    2.else与离它最近的尚未匹配的if匹配
+    3.可使用{}控制执行路径，打破else匹配规则
+switch
+    case标签必须是整型常量表达式
+    多个标签共享用一组操作
+	case 'a':
+	case 'b':
+	    ++i;
+	    break;
+    default //无视书写顺序，先顺序执行case最后default
+
+迭代语句
+while语句
+    不确定迭代次数
+    循环结束后扔可使用循环控制变量
+范围for语句
+    for(declaration : expression)
+	statement
+
+    expression 序列
+    declaration 变量　如果要对序列元素执行写操作，循环变量要声明成引用类型
+    
+    原理
+    for(auto beg=v.begin(),end=v.end();beg!=end;++beg){
+	auto &r = *beg;
+	r *= 2;
+    }
+do-while语句
+    do
+	statement
+    while(condition);
+    不允许在条件部分定义变量；如果允许在条件部分定义变量，则变量的使用出现在定义之前，这不合理
+
+跳转语句
+break
+    终止最近的迭代或switch
+continue
+    终止最近的当前迭代，并进入下一次迭代
+goto
+    控制权转向到带标签的语句
+    goto语句和标签语句必须位于同一个函数内
+    不要跳过变量的定义，容易造成未定义就使用的错误
+
+    goto label;
+    label:
+
+try语句块和异常处理
+throw 引发异常
+
+try-catch
+    try{
+	
+    } catch( ){
+    
+    }
+    沿着程序的执行路径逐层回退，直到找到适当类型的catch子句为止

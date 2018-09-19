@@ -1,0 +1,28 @@
+损失函数
+	mse  均方误差——L2损失
+		mean_squared_error
+		公式为((y_pred-y_true)**2).mean()
+
+	mae 平均绝对值均差——L1损失函数
+		mean_absolute_error
+		公式为(|y_pred-y_true|).mean()
+
+	mape
+		mean_absolute_percentage_error 
+		公式为：(|(y_true - y_pred) / clip((|y_true|),epsilon, infinite)|).mean(axis=-1) * 100
+
+	msle
+		mean_squared_logarithmic_error 
+		公式为： (log(clip(y_pred, epsilon, infinite)+1)- log(clip(y_true, epsilon,infinite)+1.))^2.mean(axis=-1)
+
+	squared_hinge 
+
+		公式为：(max(1-y_true*y_pred,0))^2.mean(axis=-1)
+
+	hinge 平滑平均绝对误差（SVM）
+
+		公式为：(max(1-y_true*y_pred,0)).mean(axis=-1)
+
+	binary_crossentropy: 逻辑回归（交叉熵函数）
+
+	categorical_crossentropy: 多分类的逻辑

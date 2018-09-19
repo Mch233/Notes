@@ -1,0 +1,9 @@
+格式转换
+xx.astype('float32')
+
+返回给定轴上的数组元素的乘积
+np.prod
+
+调用figure创建一个绘图对象，并且使它成为当前的绘图对象
+figsize参数：指定绘图对象的宽度和高度，单位为英寸 ，每英寸80像素
+plt.figure(figsize=(20, 4))
